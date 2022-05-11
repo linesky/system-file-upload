@@ -15,7 +15,7 @@ function Connection(connection){
 	sss=start.toString();
 	setTimeout(function(){
 		connection.destroy();
-	},1000);
+	},8000);
 connection.on('data',onData);
 connection.on('close',onClose);
 connection.on('error',onError);
