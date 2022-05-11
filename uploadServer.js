@@ -1,7 +1,7 @@
 var start=0
 var fs = require("fs"); 
 var nt = require("net");
-
+var ddatas=""
 var srv=nt.createServer();
 srv.on("connection",Connection);
 
@@ -10,26 +10,26 @@ srv.listen(8080,function(){
 });
 
 function Connection(connection){
-	var d = Date();
-	console.log(d);
+	ddatas="";
+	var iip=connection.remoteAddress;
+	sss=start.toString();
+	setTimeout(function(){
+		connection.destroy();
+	},1000);
 connection.on('data',onData);
 connection.on('close',onClose);
 connection.on('error',onError);
 	function onData(data){
-		start=start+1;
-		sss=start.toString();
-		var v="";
-		console.log("--------");
 		vv=data.toString();
-		fs.writeFile ( sss,vv , function  ( err ){
-			if (err) console.log(err);
-				connection.end("file saved as : " +sss);
-		});
-		
+		ddatas=ddatas+vv
 	}
 	function onClose(){
-		var d = Date();
-		console.log(d);
+		fs.writeFile ( sss,ddatas , function  ( err ){
+			if (err) console.log(err);
+		});
+		console.log(iip+": " + sss);
+		start=start+1;
+		connection.destroy();
 	}
 	function onError(data){
 		console.log(data);
